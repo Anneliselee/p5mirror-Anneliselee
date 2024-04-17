@@ -22,7 +22,7 @@ bin/mirror.sh --user p5name
 
 ```
 # Edit this line for your editor.p5js user name
-bin/mirror.sh --user p5name
+bin/mirror.sh --user Anneliselee
 
 ```
 
