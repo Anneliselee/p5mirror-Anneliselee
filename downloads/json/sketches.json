@@ -550,6 +550,120 @@
     "id": "Z9Gnq6-yK"
   },
   {
+    "name": "AUDIO REACTIVE GALAXY",
+    "_id": "tr49eonaF",
+    "updatedAt": "2024-04-30T04:45:22.246Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "6630440f6821f38418822d5f",
+          "6630440f6821f38418822d5e",
+          "6630440f6821f38418822d60"
+        ],
+        "fileType": "folder",
+        "_id": "6630440f6821f38418822d61",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T04:45:22.246Z",
+        "updatedAt": "2024-04-30T04:45:22.246Z",
+        "id": "6630440f6821f38418822d61"
+      },
+      {
+        "name": "sketch.js",
+        "content": "const binCount = 1024\nlet particles = new Array(binCount)\n\nlet fft\n\nlet Particle = function(position, direction, r,g,b){\n  this.position = createVector(windowWidth/2, windowHeight/2)\n  this.speed = 1\n  this.color = [r + random(-32,32),g+ random(-32,32),b+ random(-32,32)]\n  this.direction = direction\n  \n  this.draw = function(){\n    circle(this.position.x, this.position.y, this.diameter)\n    fill(this.color)\n  }\n  \n  this.update = function(energy){\n    this.speed = energy\n    this.diameter = random(5, 7) + energy * 50\n    this.position.x += this.speed * 10 * Math.sin(this.direction)\n    this.position.y += this.speed * 10 * Math.cos(this.direction)\n    // if (this.position.y > windowWidth || this.position.x > windowHeight || this.position.y < 0 || this.position.x < 0) { \n    //   this.position = createVector(windowWidth/2, windowHeight/2)   \n    // }\n  }\n}\n\nfunction setup(){\n  createCanvas(windowWidth, windowHeight)\n  noStroke()\n  \n  let mic = new p5.AudioIn()\n  mic.start()\n  \n  fft = new p5.FFT()\n  fft.setInput(mic)\n  \n  positionParticles()\n\n}\n\nfunction draw(){\n  background(0, 0, 0)\n  let spectrum = fft.analyze()\n  updateParticles(spectrum)\n}\n\nfunction windowResized() {\n  // cWidth = windowWidth;\n  // cHeight = windowHeight;\n  // createCanvas(windowWidth, windowHeight);\n  resizeCanvas(windowWidth, windowHeight);\n}\n\nfunction positionParticles() {\n  for (let i = 0; i < particles.length; i++) {\n    let x = random(0, width); // random x coordinate\n    let y = random(0, height); // random y coordinate\n    let direction = map(i, 0, binCount, 0, 360);\n    let position = createVector(x, y);\n    let r = map(i, 0, binCount, 33, 223);\n    let g = map(i, 0, binCount, 33, 223);\n    let b = map(i, 0, binCount, 33, 223);\n    let partickle = new Particle(position, direction, r, g, b);\n    particles[i] = partickle;\n  }\n}\n\nfunction updateParticles(spectrum) {\n  spectrum.forEach((bin, i) => {\n    let binLevel = map(bin, 0, 255, 0, 1);\n    particles[i].update(binLevel);\n\n    // Add boundary checking and wrapping logic\n    // if (particles[i].position.x > windowWidth) {\n    //   particles[i].position.x = 0;\n    // } else if (particles[i].position.x < 0) {\n    //   particles[i].position.x = windowWidth;\n    // }\n    // if (particles[i].position.y > windowHeight) {\n    //   particles[i].position.y = 0;\n    // } else if (particles[i].position.y < 0) {\n    //   particles[i].position.y = windowHeight;\n    // }\n\n    particles[i].draw();\n  });\n}\n\n// Only for drawing static particles in one section of the workshop\n// function drawParticles() {\n//   particles.forEach(particle => {\n//     particle.diameter = 5\n//     particle.draw()\n//   })\n// }\n\nfunction touchStarted() {\n  if (getAudioContext().state !== 'running') {\n    getAudioContext().resume()\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "6630440f6821f38418822d5e",
+        "isSelectedFile": true,
+        "createdAt": "2024-04-30T04:45:22.246Z",
+        "updatedAt": "2024-04-30T04:45:22.246Z",
+        "id": "6630440f6821f38418822d5e"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6630440f6821f38418822d5f",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T04:45:22.246Z",
+        "updatedAt": "2024-04-30T04:45:22.246Z",
+        "id": "6630440f6821f38418822d5f"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6630440f6821f38418822d60",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T04:45:22.246Z",
+        "updatedAt": "2024-04-30T04:45:22.246Z",
+        "id": "6630440f6821f38418822d60"
+      }
+    ],
+    "createdAt": "2024-04-30T03:42:53.216Z",
+    "id": "tr49eonaF"
+  },
+  {
+    "name": "AUDIO REACTIVE GALAXY copy",
+    "_id": "tPrLayxgm",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "663068c46821f38418822d63",
+          "663068c46821f38418822d64",
+          "663068c46821f38418822d65"
+        ],
+        "fileType": "folder",
+        "_id": "663068c46821f38418822d62",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T07:31:04.426Z",
+        "updatedAt": "2024-04-30T07:31:04.426Z",
+        "id": "663068c46821f38418822d62"
+      },
+      {
+        "name": "sketch.js",
+        "content": "//\nlet total;\n//\nconst binCount = 1024\nlet particles = new Array(binCount)\n\nlet fft\n\nlet Particle = function(position, direction, r,g,b){\n  this.position = createVector(windowWidth/2, windowHeight/2)\n  this.speed = 1\n  this.color = [r + random(-32,32),g+ random(-32,32),b+ random(-32,32)]\n  this.direction = direction\n  \n  this.draw = function(){\n    circle(this.position.x, this.position.y, this.diameter)\n    fill(this.color)\n  }\n  \n  this.update = function(energy){\n    this.speed = energy\n    this.diameter = random(5, 7) + energy * 50\n    this.position.x += this.speed * 10 * Math.sin(this.direction)\n    this.position.y += this.speed * 10 * Math.cos(this.direction)\n    // if (this.position.y > windowWidth || this.position.x > windowHeight || this.position.y < 0 || this.position.x < 0) { \n    //   this.position = createVector(windowWidth/2, windowHeight/2)   \n    // }\n  }\n}\n\nfunction setup(){\n  createCanvas(windowWidth, windowHeight)\n  noStroke()\n  \n  let mic = new p5.AudioIn()\n  mic.start()\n  \n  fft = new p5.FFT()\n  fft.setInput(mic)\n  \n  positionParticles()\n  \n  total = 1200;\n\n}\n\nfunction draw(){\n  background(0, 0, 0)\n  let spectrum = fft.analyze()\n  updateParticles(spectrum)\n  \n//   r2 = random(255); \n//     g2 = random(100,200); \n//     b2 = random(100); \n//     a2 = random(200,255);\n  \n//     push();\n//     translate(width / 2, height / 2);\n//     rotate(frameCount * 0.03);\n//     for (let i = 0; i < total; i++) {\n//         let angle = sin(i + frameCount * 0.02) * 60;\n//         let angle2 = cos(i + frameCount * 0.004) * 800;\n\n//         let inc = 85;\n//         let waveX = map(sin(frameCount * 0.01), -1, 1, -inc, inc);\n//         let waveY = map(cos(frameCount * 0.01), -1, 1, -inc, inc);\n\n//         let a = -394;\n//         let x2 = sin(radians(i)) * (angle2 + a) + waveX;\n//         let y2 = cos(radians(i)) * (angle2 + a) + waveY;\n\n\t\t\t\t\n// \t    fill(255);\n// \t\tcircle(x2, y2, 1);\n// \t\tlet size = map(sin(i * frameCount * 0.0002), -1, 1, 0, 4);\n// \t\tfill(r2, g2, b2, a);\n//       // not sure why this part is not working. I wanted it to be more visible + random colors\n//     }\n//     pop();\n  \n}\n\nfunction windowResized() {\n  // cWidth = windowWidth;\n  // cHeight = windowHeight;\n  // createCanvas(windowWidth, windowHeight);\n  resizeCanvas(windowWidth, windowHeight);\n}\n\nfunction positionParticles() {\n  for (let i = 0; i < particles.length; i++) {\n    let x = random(0, width); // random x coordinate\n    let y = random(0, height); // random y coordinate\n    let direction = map(i, 0, binCount, 0, 360);\n    let position = createVector(x, y);\n    let r = map(i, 0, binCount, 33, 223);\n    let g = map(i, 0, binCount, 33, 223);\n    let b = map(i, 0, binCount, 33, 223);\n    let partickle = new Particle(position, direction, r, g, b);\n    particles[i] = partickle;\n  }\n}\n\nfunction updateParticles(spectrum) {\n  spectrum.forEach((bin, i) => {\n    let binLevel = map(bin, 0, 255, 0, 1);\n    particles[i].update(binLevel);\n\n    // Add boundary checking and wrapping logic\n    // if (particles[i].position.x > windowWidth) {\n    //   particles[i].position.x = 0;\n    // } else if (particles[i].position.x < 0) {\n    //   particles[i].position.x = windowWidth;\n    // }\n    // if (particles[i].position.y > windowHeight) {\n    //   particles[i].position.y = 0;\n    // } else if (particles[i].position.y < 0) {\n    //   particles[i].position.y = windowHeight;\n    // }\n\n    particles[i].draw();\n  });\n}\n\n// Only for drawing static particles in one section\n// function drawParticles() {\n//   particles.forEach(particle => {\n//     particle.diameter = 5\n//     particle.draw()\n//   })\n// }\n\nfunction touchStarted() {\n  if (getAudioContext().state !== 'running') {\n    getAudioContext().resume()\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "663068c46821f38418822d64",
+        "isSelectedFile": true,
+        "createdAt": "2024-04-30T07:31:04.426Z",
+        "updatedAt": "2024-04-30T07:31:04.426Z",
+        "id": "663068c46821f38418822d64"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "663068c46821f38418822d63",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T07:31:04.426Z",
+        "updatedAt": "2024-04-30T07:31:04.426Z",
+        "id": "663068c46821f38418822d63"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "663068c46821f38418822d65",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T07:31:04.426Z",
+        "updatedAt": "2024-04-30T07:31:04.426Z",
+        "id": "663068c46821f38418822d65"
+      }
+    ],
+    "createdAt": "2024-04-30T03:43:00.562Z",
+    "updatedAt": "2024-04-30T07:31:04.426Z",
+    "id": "tPrLayxgm"
+  },
+  {
     "name": "audio visual",
     "_id": "z8hM_0t5S",
     "files": [
@@ -1386,6 +1500,216 @@
     "id": "FtXfrRQfX"
   },
   {
+    "name": "combination_3_NOT_WORKING",
+    "_id": "6Y5W_ft06",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "66307a8ff601b849dbc51c10",
+          "66307a8ff601b849dbc51c11",
+          "66307a8ff601b849dbc51c14",
+          "66307a8ff601b849dbc51c15"
+        ],
+        "fileType": "folder",
+        "_id": "66307a8ff601b849dbc51c0f",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T08:27:21.171Z",
+        "updatedAt": "2024-04-30T08:27:21.171Z",
+        "id": "66307a8ff601b849dbc51c0f"
+      },
+      {
+        "name": "sketch.js",
+        "content": "//tracker component\nvar ctracker;\n\n//array for particles\nconst binCount = 1024;\nlet particles = new Array(binCount);\n\nlet fft;\n\n//particle class\nlet Particle = function(position, direction, r, g, b) {\n    this.position = createVector(windowWidth / 2, windowHeight / 2);\n    this.speed = 1;\n    this.color = [r + random(-32, 32), g + random(-32, 32), b + random(-32, 32)];\n    this.direction = direction;\n\n    this.draw = function() {\n        ellipse(this.position.x, this.position.y, this.diameter);\n        fill(this.color);\n    }\n\n    this.update = function(energy) {\n        this.speed = energy;\n        this.diameter = random(5, 7) + energy * 50;\n        this.position.x += this.speed * 10 * Math.sin(this.direction);\n        this.position.y += this.speed * 10 * Math.cos(this.direction);\n    }\n}\n\n\n\nfunction setup() {\n  createCanvas(windowWidth, windowHeight);\n    \n  // no stroke for entire window\n  noStroke();\n  \n  //audio input for particles + setting source\n  let mic = new p5.AudioIn();\n  mic.start();\n  fft = new p5.FFT();\n  fft.setInput(mic);\n\n  positionParticles();\n  \n  // setup camera capture\n  var videoInput = createCapture(VIDEO);\n  videoInput.size(windowWidth, windowHeight);\n  videoInput.position(0, 0);\n\n  //you can hide the video\n  videoInput.hide();\n\n  // setup canvas\n  var cnv = createCanvas(800, 600);\n  cnv.position(0, 0);\n\n  // setup tracker\n  ctracker = new clm.tracker();\n  ctracker.init(pModel);\n  ctracker.start(videoInput.elt);\n\n   // Create an Audio input\n  //mic = new p5.AudioIn();\n\n  // start the Audio Input.\n  // By default, it does not .connect() (to the computer speakers)\n  //mic.start();\n}\n\nfunction windowResized() {\n    resizeCanvas(windowWidth, windowHeight);\n}\n\nfunction draw() {\n  background (0);\n  //similar to background but it will make transparent pixels\n  //and will not get rid of the camera feed if not hidden\n  clear();\n  \n  // Get the overall volume (between 0 and 1.0)\n  //var v = mic.getLevel();\n  // \"Smooth\" the volume variable with an easing function\n  //volume += (v-volume)/3;\n  \n  //get the detection score, or how well the face is detected (from 0 to 1)\n  var detectionScore = ctracker.getScore();\n\n  if (detectionScore > 0) {\n    \n    // get array of face marker positions [x, y] format\n    var positions = ctracker.getCurrentPosition();\n\n    /*\n    You can find all the points here\n    https://camo.githubusercontent.com/e967f92904c8ef84228b8950d3a278efb895b9d2/68747470733a2f2f617564756e6f2e6769746875622e696f2f636c6d747261636b722f6578616d706c65732f6d656469612f666163656d6f64656c5f6e756d626572696e675f6e65775f736d616c6c2e706e67\n    */\n\n    var leftEyeX = positions[32][0];\n    var leftEyeY = positions[32][1];\n\n    var rightEyeX = positions[27][0];\n    var rightEyeY = positions[27][1];\n\n    var noseX = positions[62][0];\n    var noseY = positions[62][1];\n    \n    var faceLeftX = positions[1][0];\n    var faceLeftY = positions[1][1];\n    var faceRightX = positions[13][0];\n    var faceRightY = positions[13][1];\n    \n    //the distance between the left point and the rightmost point is a good indication\n    //of the size of the face or proximity to the camera and I can use it to scale my graphic elements\n    var size = dist(faceLeftX,faceLeftY, faceRightX, faceRightY);\n    \n    //draw the face\n    fill(255,255,255,60);\n    ellipse(noseX, noseY, size, size);\n    \n     //draw a star on the nose\n    fill(255, 204, 0);\n    push(); // save the current state of transformation (i.e. rotation)\n    translate(noseX, noseY); // move the origin to the nose position\n    rotate(frameCount / -50.0); // rotate by a small amount each frame\n    star(0, 0, 20, 50, 5); // draw the star at the origin\n    pop(); // restore the previous state of transformation\n    \n\n    /////When you click the mouse this draws all the detected positions\n    if(mouseIsPressed) {\n    for (var i = 0; i < positions.length; i++) {\n      // set the color of the ellipse based on position on screen\n      fill(255, 0, 0);\n      // draw ellipse at each position point\n      ellipse(positions[i][0], positions[i][1], 4, 4);\n    }\n    }\n\n  }\n  \n  // for colorful audio reactive particles\n  stroke(255);\n  let t = 0\n  for(i=0;i++<2000;a= noise(i%64.0)*9+t/r, point(400+cos(a)*r, 200+sin(a)*r/2.0)){\n     r=abs(noise(i)-.2)*500;\n     t+=0.001;\n  }\n  \n  drawBackgroundArtwork();\n    let spectrum = fft.analyze();\n    updateParticles(spectrum);\n  \n\n}\n\n// start at center and circle around it\nfunction positionParticles() {\n    for (let i = 0; i < particles.length; i++) {\n        let x = random(0, width);\n        let y = random(0, height);\n        let direction = map(i, 0, binCount, 0, 360);\n        let position = createVector(x, y);\n        let r = map(i, 0, binCount, 33, 223);\n        let g = map(i, 0, binCount, 33, 223);\n        let b = map(i, 0, binCount, 33, 223);\n        let partickle = new Particle(position, direction, r, g, b);\n        particles[i] = partickle;\n    }\n}\n\n//star energy\nfunction updateParticles(spectrum) {\n    spectrum.forEach((bin, i) => {\n        let binLevel = map(bin, 0, 255, 0, 1);\n        particles[i].update(binLevel);\n        particles[i].draw();\n    });\n}\n\n// function for white star spiral\nfunction drawBackgroundArtwork() {\n    let total;\n    total = 1200;\n\n    push();\n    translate(width / 2, height / 2); // Translate to the center of the screen\n    for (let i = 0; i < total; i++) {\n        let angle = sin(i + frameCount * 0.02) * 60;\n        let angle2 = cos(i + frameCount * 0.004) * 800;\n\n        let inc = 85;\n        let waveX = map(sin(frameCount * 0.01), -1, 1, -inc, inc);\n        let waveY = map(cos(frameCount * 0.01), -1, 1, -inc, inc);\n\n        let a = -394;\n        let x = sin(radians(i)) * (angle2 + a) + waveX;\n        let y = cos(radians(i)) * (angle2 + a) + waveY;\n\n        fill(255);\n        ellipse(x, y, 1);\n        let size = map(sin(i * frameCount * 0.0002), -1, 1, 0, 4);\n        fill(random(255), random(100, 200), random(100), random(200, 255));\n    }\n    pop();\n}\n\nfunction touchStarted() {\n    if (getAudioContext().state !== 'running') {\n        getAudioContext().resume();\n    }\n}\n\n// Function to draw a star for face\nfunction star(x, y, radius1, radius2, npoints) {\n  var angle = TWO_PI / npoints;\n  var halfAngle = angle / 2.0;\n  beginShape();\n  for (var a = 0; a < TWO_PI; a += angle) {\n    var sx = x + cos(a) * radius2;\n    var sy = y + sin(a) * radius2;\n    vertex(sx, sy);\n    sx = x + cos(a + halfAngle) * radius1;\n    sy = y + sin(a + halfAngle) * radius1;\n    vertex(sx, sy);\n  }\n  endShape(CLOSE);\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "66307a8ff601b849dbc51c14",
+        "isSelectedFile": true,
+        "createdAt": "2024-04-30T08:27:21.171Z",
+        "updatedAt": "2024-04-30T08:27:21.171Z",
+        "id": "66307a8ff601b849dbc51c14"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html>\n  <head>\n    <script src=\"libraries/clmtrackr.js\"></script>\n    <script src=\"libraries/model_pca_20_svm.js\"></script>\n    \n    \n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js\"></script>\n\n    \n    \n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "66307a8ff601b849dbc51c10",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T08:27:21.171Z",
+        "updatedAt": "2024-04-30T08:27:21.171Z",
+        "id": "66307a8ff601b849dbc51c10"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "66307a8ff601b849dbc51c15",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T08:27:21.171Z",
+        "updatedAt": "2024-04-30T08:27:21.171Z",
+        "id": "66307a8ff601b849dbc51c15"
+      },
+      {
+        "name": "libraries",
+        "content": "",
+        "children": [
+          "66307a8ff601b849dbc51c12",
+          "66307a8ff601b849dbc51c13"
+        ],
+        "fileType": "folder",
+        "_id": "66307a8ff601b849dbc51c11",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T08:27:21.171Z",
+        "updatedAt": "2024-04-30T08:27:21.171Z",
+        "id": "66307a8ff601b849dbc51c11"
+      },
+      {
+        "name": "clmtrackr.js",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "66307a8ff601b849dbc51c12",
+        "isSelectedFile": false,
+        "url": "https://assets.editor.p5js.org/615204259975c800247ed951/492e23ee-37ca-4656-a9ca-078a4b72c2eb.js",
+        "createdAt": "2024-04-30T08:27:21.171Z",
+        "updatedAt": "2024-04-30T08:27:21.171Z",
+        "id": "66307a8ff601b849dbc51c12"
+      },
+      {
+        "name": "model_pca_20_svm.js",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "66307a8ff601b849dbc51c13",
+        "isSelectedFile": false,
+        "url": "https://assets.editor.p5js.org/615204259975c800247ed951/c3c06af7-4065-484e-9c32-9d45d7cd7752.js",
+        "createdAt": "2024-04-30T08:27:21.171Z",
+        "updatedAt": "2024-04-30T08:27:21.171Z",
+        "id": "66307a8ff601b849dbc51c13"
+      }
+    ],
+    "createdAt": "2024-04-30T04:58:56.337Z",
+    "updatedAt": "2024-04-30T08:27:21.171Z",
+    "id": "6Y5W_ft06"
+  },
+  {
+    "name": "combine galaxy + audio reactive particles",
+    "_id": "ZhPICG6wp",
+    "updatedAt": "2024-04-30T06:17:41.404Z",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "66306d9ec7f33597c56b07c2",
+          "66306d9ec7f33597c56b07c1",
+          "66306d9ec7f33597c56b07c3"
+        ],
+        "fileType": "folder",
+        "_id": "66306d9ec7f33597c56b07c4",
+        "createdAt": "2024-04-30T06:17:41.404Z",
+        "updatedAt": "2024-04-30T06:17:41.404Z",
+        "isSelectedFile": false,
+        "id": "66306d9ec7f33597c56b07c4"
+      },
+      {
+        "name": "sketch.js",
+        "content": "const binCount = 1024;\nlet particles = new Array(binCount);\nlet fft;\n\nlet Particle = function(position, direction, r, g, b) {\n    this.position = createVector(windowWidth / 2, windowHeight / 2);\n    this.speed = 1;\n    this.color = [r + random(-32, 32), g + random(-32, 32), b + random(-32, 32)];\n    this.direction = direction;\n\n    this.draw = function() {\n        circle(this.position.x, this.position.y, this.diameter);\n        fill(this.color);\n    };\n\n    this.update = function(energy) {\n        this.speed = energy;\n        this.diameter = random(5, 7) + energy * 50;\n        this.position.x += this.speed * 10 * Math.sin(this.direction);\n        this.position.y += this.speed * 10 * Math.cos(this.direction);\n    };\n};\n\nfunction setup() {\n    createCanvas(windowWidth, windowHeight);\n    noStroke();\n\n    let mic = new p5.AudioIn();\n    mic.start();\n\n    fft = new p5.FFT();\n    fft.setInput(mic);\n\n    positionParticles();\n}\n\nfunction draw() {\n    background(0);\n    drawBackgroundArtwork();\n    let spectrum = fft.analyze();\n    updateParticles(spectrum);\n  \n\n}\n\nfunction windowResized() {\n    resizeCanvas(windowWidth, windowHeight);\n}\n\nfunction positionParticles() {\n    for (let i = 0; i < particles.length; i++) {\n        let x = random(0, width);\n        let y = random(0, height);\n        let direction = map(i, 0, binCount, 0, 360);\n        let position = createVector(x, y);\n        let r = map(i, 0, binCount, 33, 223);\n        let g = map(i, 0, binCount, 33, 223);\n        let b = map(i, 0, binCount, 33, 223);\n        let partickle = new Particle(position, direction, r, g, b);\n        particles[i] = partickle;\n    }\n}\n\nfunction updateParticles(spectrum) {\n    spectrum.forEach((bin, i) => {\n        let binLevel = map(bin, 0, 255, 0, 1);\n        particles[i].update(binLevel);\n        particles[i].draw();\n    });\n}\n\nfunction drawBackgroundArtwork() {\n    let total;\n    total = 1200;\n\n    push();\n    translate(width / 2, height / 2); // Translate to the center of the screen\n    for (let i = 0; i < total; i++) {\n        let angle = sin(i + frameCount * 0.02) * 60;\n        let angle2 = cos(i + frameCount * 0.004) * 800;\n\n        let inc = 85;\n        let waveX = map(sin(frameCount * 0.01), -1, 1, -inc, inc);\n        let waveY = map(cos(frameCount * 0.01), -1, 1, -inc, inc);\n\n        let a = -394;\n        let x = sin(radians(i)) * (angle2 + a) + waveX;\n        let y = cos(radians(i)) * (angle2 + a) + waveY;\n\n        fill(255);\n        circle(x, y, 1);\n        let size = map(sin(i * frameCount * 0.0002), -1, 1, 0, 4);\n        fill(random(255), random(100, 200), random(100), random(200, 255));\n    }\n    pop();\n}\n\nfunction touchStarted() {\n    if (getAudioContext().state !== 'running') {\n        getAudioContext().resume();\n    }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "66306d9ec7f33597c56b07c1",
+        "isSelectedFile": true,
+        "createdAt": "2024-04-30T06:17:41.404Z",
+        "updatedAt": "2024-04-30T06:17:41.404Z",
+        "id": "66306d9ec7f33597c56b07c1"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "66306d9ec7f33597c56b07c2",
+        "createdAt": "2024-04-30T06:17:41.404Z",
+        "updatedAt": "2024-04-30T06:17:41.404Z",
+        "isSelectedFile": false,
+        "id": "66306d9ec7f33597c56b07c2"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "66306d9ec7f33597c56b07c3",
+        "createdAt": "2024-04-30T06:17:41.404Z",
+        "updatedAt": "2024-04-30T06:17:41.404Z",
+        "isSelectedFile": false,
+        "id": "66306d9ec7f33597c56b07c3"
+      }
+    ],
+    "createdAt": "2024-04-30T04:07:34.887Z",
+    "id": "ZhPICG6wp"
+  },
+  {
+    "name": "combine galaxy + audio reactive particles copy",
+    "_id": "eH3xWyf_S",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "663086075ee5d559795e4450",
+          "663086075ee5d559795e4451",
+          "663086075ee5d559795e4452"
+        ],
+        "fileType": "folder",
+        "_id": "663086075ee5d559795e444f",
+        "createdAt": "2024-04-30T05:57:42.988Z",
+        "updatedAt": "2024-04-30T05:57:56.127Z",
+        "isSelectedFile": false,
+        "id": "663086075ee5d559795e444f"
+      },
+      {
+        "name": "sketch.js",
+        "content": "var ctracker;\n\nconst binCount = 1024;\nlet particles = new Array(binCount);\nlet fft;\n\nlet Particle = function(position, direction, r, g, b) {\n    this.position = createVector(windowWidth / 2, windowHeight / 2);\n    this.speed = 1;\n    this.color = [r + random(-32, 32), g + random(-32, 32), b + random(-32, 32)];\n    this.direction = direction;\n\n    this.draw = function() {\n        circle(this.position.x, this.position.y, this.diameter);\n        fill(this.color);\n    };\n\n    this.update = function(energy) {\n        this.speed = energy;\n        this.diameter = random(5, 7) + energy * 50;\n        this.position.x += this.speed * 10 * Math.sin(this.direction);\n        this.position.y += this.speed * 10 * Math.cos(this.direction);\n    };\n};\n\nfunction setup() {\n    createCanvas(windowWidth, windowHeight);\n    noStroke();\n\n    let mic = new p5.AudioIn();\n    mic.start();\n\n    fft = new p5.FFT();\n    fft.setInput(mic);\n\n    positionParticles();\n  \n    var videoInput = createCapture(VIDEO);\n  \n  ctracker = new clm.tracker();\n  ctracker.init(pModel);\n  ctracker.start(videoInput.elt);\n}\n\nfunction draw() {\n    background(0);\n    drawBackgroundArtwork();\n    let spectrum = fft.analyze();\n    updateParticles(spectrum);\n  \n  var detectionScore = ctracker.getScore();\n\n  if (detectionScore > 0) {\n    \n    // get array of face marker positions [x, y] format\n    var positions = ctracker.getCurrentPosition();\n    \n    var leftEyeX = positions[32][0];\n    var leftEyeY = positions[32][1];\n\n    var rightEyeX = positions[27][0];\n    var rightEyeY = positions[27][1];\n\n    var noseX = positions[62][0];\n    var noseY = positions[62][1];\n    \n    var faceLeftX = positions[1][0];\n    var faceLeftY = positions[1][1];\n    var faceRightX = positions[13][0];\n    var faceRightY = positions[13][1];\n    \n    var size = dist(faceLeftX,faceLeftY, faceRightX, faceRightY);\n    \n    fill(255,255,255,60);\n    ellipse(noseX, noseY, size, size);\n    \n    //draw the eyes\n    fill(255);\n    ellipse(rightEyeX, rightEyeY, 10, 10);\n    ellipse(leftEyeX, leftEyeY, 10, 10);\n   \n    if(mouseIsPressed) {\n    for (var i = 0; i < positions.length; i++) {\n      // set the color of the ellipse based on position on screen\n      fill(255, 0, 0);\n      // draw ellipse at each position point\n      ellipse(positions[i][0], positions[i][1], 4, 4);\n    }\n    }\n  }\n}\n\nfunction windowResized() {\n    resizeCanvas(windowWidth, windowHeight);\n}\n\nfunction positionParticles() {\n    for (let i = 0; i < particles.length; i++) {\n        let x = random(0, width);\n        let y = random(0, height);\n        let direction = map(i, 0, binCount, 0, 360);\n        let position = createVector(x, y);\n        let r = map(i, 0, binCount, 33, 223);\n        let g = map(i, 0, binCount, 33, 223);\n        let b = map(i, 0, binCount, 33, 223);\n        let partickle = new Particle(position, direction, r, g, b);\n        particles[i] = partickle;\n    }\n}\n\nfunction updateParticles(spectrum) {\n    spectrum.forEach((bin, i) => {\n        let binLevel = map(bin, 0, 255, 0, 1);\n        particles[i].update(binLevel);\n        particles[i].draw();\n    });\n}\n\nfunction drawBackgroundArtwork() {\n    let total;\n    total = 1200;\n\n    push();\n    translate(width / 2, height / 2); // Translate to the center of the screen\n    for (let i = 0; i < total; i++) {\n        let angle = sin(i + frameCount * 0.02) * 60;\n        let angle2 = cos(i + frameCount * 0.004) * 800;\n\n        let inc = 85;\n        let waveX = map(sin(frameCount * 0.01), -1, 1, -inc, inc);\n        let waveY = map(cos(frameCount * 0.01), -1, 1, -inc, inc);\n\n        let a = -394;\n        let x = sin(radians(i)) * (angle2 + a) + waveX;\n        let y = cos(radians(i)) * (angle2 + a) + waveY;\n\n        fill(255);\n        circle(x, y, 1);\n        let size = map(sin(i * frameCount * 0.0002), -1, 1, 0, 4);\n        fill(random(255), random(100, 200), random(100), random(200, 255));\n    }\n    pop();\n}\n\nfunction touchStarted() {\n    if (getAudioContext().state !== 'running') {\n        getAudioContext().resume();\n    }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "663086075ee5d559795e4451",
+        "isSelectedFile": true,
+        "createdAt": "2024-04-30T05:57:42.988Z",
+        "updatedAt": "2024-04-30T05:57:42.988Z",
+        "id": "663086075ee5d559795e4451"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://raw.githubusercontent.com/auduno/clmtrackr/dev/build/clmtrackr.js\"></script>\n    <script src=\"libraries/model_pca_20_svm.js\"></script>\n    \n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "663086075ee5d559795e4450",
+        "createdAt": "2024-04-30T05:57:42.988Z",
+        "updatedAt": "2024-04-30T05:57:42.988Z",
+        "isSelectedFile": false,
+        "id": "663086075ee5d559795e4450"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "663086075ee5d559795e4452",
+        "createdAt": "2024-04-30T05:57:42.988Z",
+        "updatedAt": "2024-04-30T05:57:42.988Z",
+        "isSelectedFile": false,
+        "id": "663086075ee5d559795e4452"
+      }
+    ],
+    "createdAt": "2024-04-30T05:47:51.934Z",
+    "updatedAt": "2024-04-30T05:57:56.127Z",
+    "id": "eH3xWyf_S"
+  },
+  {
     "name": "Curse anteater",
     "_id": "UsPdLuUht",
     "updatedAt": "2021-10-29T16:24:25.785Z",
@@ -1704,19 +2028,19 @@
         "fileType": "folder",
         "_id": "661d8ad17fc88121e05ff035",
         "isSelectedFile": false,
-        "createdAt": "2024-04-15T20:19:18.537Z",
-        "updatedAt": "2024-04-15T20:19:18.537Z",
+        "createdAt": "2024-04-30T04:21:22.147Z",
+        "updatedAt": "2024-04-30T04:21:22.147Z",
         "id": "661d8ad17fc88121e05ff035"
       },
       {
         "name": "sketch.js",
-        "content": "// Face Tracking by jeeyeonr\n\n//this is the tracker component - it's just a black box don't worry about it\nvar ctracker;\n\n/* \nif sound doesn't work click the gear button an select run in browser ON\n*/\nvar mic;\nvar volume = 0;\n\n\nfunction setup() {\n  \n  // setup camera capture\n  var videoInput = createCapture(VIDEO);\n  videoInput.size(800, 600);\n  videoInput.position(0, 0);\n\n  //you can hide the video\n  //videoInput.hide();\n\n  // setup canvas\n  var cnv = createCanvas(800, 600);\n  cnv.position(0, 0);\n\n  // setup tracker\n  ctracker = new clm.tracker();\n  ctracker.init(pModel);\n  ctracker.start(videoInput.elt);\n\n   // Create an Audio input\n  mic = new p5.AudioIn();\n\n  // start the Audio Input.\n  // By default, it does not .connect() (to the computer speakers)\n  mic.start();\n\n  noStroke();\n}\n\nfunction draw() {\n  //similar to background but it will make transparent pixels\n  //and will not get rid of the camera feed if not hidden\n  clear();\n  \n  // Get the overall volume (between 0 and 1.0)\n  var v = mic.getLevel();\n  // \"Smooth\" the volume variable with an easing function\n  volume += (v-volume)/3;\n  \n  //get the detection score, or how well the face is detected (from 0 to 1)\n  var detectionScore = ctracker.getScore();\n\n  if (detectionScore > 0) {\n    \n    // get array of face marker positions [x, y] format\n    var positions = ctracker.getCurrentPosition();\n\n    /*\n    You can find all the points here\n    https://camo.githubusercontent.com/e967f92904c8ef84228b8950d3a278efb895b9d2/68747470733a2f2f617564756e6f2e6769746875622e696f2f636c6d747261636b722f6578616d706c65732f6d656469612f666163656d6f64656c5f6e756d626572696e675f6e65775f736d616c6c2e706e67\n    */\n\n    var noseX = positions[62][0];\n    var noseY = positions[62][1];\n    \n    var faceLeftX = positions[1][0];\n    var faceLeftY = positions[1][1];\n    var faceRightX = positions[13][0];\n    var faceRightY = positions[13][1];\n    \n    //the distance between the left point and the rightmost point is a good indication\n    //of the size of the face or proximity to the camera and I can use it to scale my graphic elements\n    var size = dist(faceLeftX,faceLeftY, faceRightX, faceRightY);\n    \n    //draw the face\n    fill(255,255,255,60);\n    ellipse(noseX, noseY, size, size);\n    \n    //draw a star on the nose\n    fill(255, 204, 0);\n    push(); // save the current state of transformation (i.e. rotation)\n    translate(noseX, noseY); // move the origin to the nose position\n    rotate(frameCount / -50.0); // rotate by a small amount each frame\n    star(0, 0, 20, 50, 5); // draw the star at the origin\n    pop(); // restore the previous state of transformation\n    \n    \n\n    /////When you click the mouse this draws all the detected positions\n    if(mouseIsPressed) {\n    for (var i = 0; i < positions.length; i++) {\n      // set the color of the ellipse based on position on screen\n      fill(255, 0, 0);\n      // draw ellipse at each position point\n      ellipse(positions[i][0], positions[i][1], 4, 4);\n    }\n    }\n\n  }\n\n}\n\n// Function to draw a star\nfunction star(x, y, radius1, radius2, npoints) {\n  var angle = TWO_PI / npoints;\n  var halfAngle = angle / 2.0;\n  beginShape();\n  for (var a = 0; a < TWO_PI; a += angle) {\n    var sx = x + cos(a) * radius2;\n    var sy = y + sin(a) * radius2;\n    vertex(sx, sy);\n    sx = x + cos(a + halfAngle) * radius1;\n    sy = y + sin(a + halfAngle) * radius1;\n    vertex(sx, sy);\n  }\n  endShape(CLOSE);\n}",
+        "content": "// Face Tracking by jeeyeonr\n\n//this is the tracker component - it's just a black box don't worry about it\nvar ctracker;\n\n/* \nif sound doesn't work click the gear button an select run in browser ON\n*/\nvar mic;\nvar volume = 0;\n\n\nfunction setup() {\n  \n  // setup camera capture\n  var videoInput = createCapture(VIDEO);\n  videoInput.size(800, 600);\n  videoInput.position(0, 0);\n\n  //you can hide the video\n  // videoInput.hide();\n\n  // setup canvas\n  var cnv = createCanvas(800, 600);\n  cnv.position(0, 0);\n\n  // setup tracker\n  ctracker = new clm.tracker();\n  ctracker.init(pModel);\n  ctracker.start(videoInput.elt);\n\n   // Create an Audio input\n  mic = new p5.AudioIn();\n\n  // start the Audio Input.\n  // By default, it does not .connect() (to the computer speakers)\n  mic.start();\n\n  noStroke();\n}\n\nfunction draw() {\n  //similar to background but it will make transparent pixels\n  //and will not get rid of the camera feed if not hidden\n  clear();\n  \n  // Get the overall volume (between 0 and 1.0)\n  var v = mic.getLevel();\n  // \"Smooth\" the volume variable with an easing function\n  volume += (v-volume)/3;\n  \n  //get the detection score, or how well the face is detected (from 0 to 1)\n  var detectionScore = ctracker.getScore();\n\n  if (detectionScore > 0) {\n    \n    // get array of face marker positions [x, y] format\n    var positions = ctracker.getCurrentPosition();\n\n    /*\n    You can find all the points here\n    https://camo.githubusercontent.com/e967f92904c8ef84228b8950d3a278efb895b9d2/68747470733a2f2f617564756e6f2e6769746875622e696f2f636c6d747261636b722f6578616d706c65732f6d656469612f666163656d6f64656c5f6e756d626572696e675f6e65775f736d616c6c2e706e67\n    */\n    \n    var leftEyeX = positions[32][0];\n    var leftEyeY = positions[32][1];\n\n    var rightEyeX = positions[27][0];\n    var rightEyeY = positions[27][1];\n\n    var noseX = positions[62][0];\n    var noseY = positions[62][1];\n    \n    var faceLeftX = positions[1][0];\n    var faceLeftY = positions[1][1];\n    var faceRightX = positions[13][0];\n    var faceRightY = positions[13][1];\n    \n    //the distance between the left point and the rightmost point is a good indication\n    //of the size of the face or proximity to the camera and I can use it to scale my graphic elements\n    var size = dist(faceLeftX,faceLeftY, faceRightX, faceRightY);\n    \n    //draw the face\n    fill(255,255,255,60);\n    ellipse(noseX, noseY, size, size);\n    \n    //draw a star on the nose\n    fill(255, 204, 0);\n    push(); // save the current state of transformation (i.e. rotation)\n    translate(noseX, noseY); // move the origin to the nose position\n    rotate(frameCount / -50.0); // rotate by a small amount each frame\n    star(0, 0, 20, 50, 5); // draw the star at the origin\n    pop(); // restore the previous state of transformation\n    \n    \n\n    /////When you click the mouse this draws all the detected positions\n    if(mouseIsPressed) {\n    for (var i = 0; i < positions.length; i++) {\n      // set the color of the ellipse based on position on screen\n      fill(255, 0, 0);\n      // draw ellipse at each position point\n      ellipse(positions[i][0], positions[i][1], 4, 4);\n    }\n    }\n\n  }\n\n}\n\n// Function to draw a star\nfunction star(x, y, radius1, radius2, npoints) {\n  var angle = TWO_PI / npoints;\n  var halfAngle = angle / 2.0;\n  beginShape();\n  for (var a = 0; a < TWO_PI; a += angle) {\n    var sx = x + cos(a) * radius2;\n    var sy = y + sin(a) * radius2;\n    vertex(sx, sy);\n    sx = x + cos(a + halfAngle) * radius1;\n    sy = y + sin(a + halfAngle) * radius1;\n    vertex(sx, sy);\n  }\n  endShape(CLOSE);\n}",
         "children": [],
         "fileType": "file",
         "_id": "661d8ad17fc88121e05ff03a",
         "isSelectedFile": true,
-        "createdAt": "2024-04-15T20:19:18.537Z",
-        "updatedAt": "2024-04-15T20:19:18.537Z",
+        "createdAt": "2024-04-30T04:21:22.147Z",
+        "updatedAt": "2024-04-30T04:21:22.147Z",
         "id": "661d8ad17fc88121e05ff03a"
       },
       {
@@ -1726,8 +2050,8 @@
         "fileType": "file",
         "_id": "661d8ad17fc88121e05ff036",
         "isSelectedFile": false,
-        "createdAt": "2024-04-15T20:19:18.537Z",
-        "updatedAt": "2024-04-15T20:19:18.537Z",
+        "createdAt": "2024-04-30T04:21:22.147Z",
+        "updatedAt": "2024-04-30T04:21:22.147Z",
         "id": "661d8ad17fc88121e05ff036"
       },
       {
@@ -1737,8 +2061,8 @@
         "fileType": "file",
         "_id": "661d8ad17fc88121e05ff03b",
         "isSelectedFile": false,
-        "createdAt": "2024-04-15T20:19:18.537Z",
-        "updatedAt": "2024-04-15T20:19:18.537Z",
+        "createdAt": "2024-04-30T04:21:22.147Z",
+        "updatedAt": "2024-04-30T04:21:22.147Z",
         "id": "661d8ad17fc88121e05ff03b"
       },
       {
@@ -1751,8 +2075,8 @@
         "fileType": "folder",
         "_id": "661d8ad17fc88121e05ff037",
         "isSelectedFile": false,
-        "createdAt": "2024-04-15T20:19:18.537Z",
-        "updatedAt": "2024-04-15T20:19:18.537Z",
+        "createdAt": "2024-04-30T04:21:22.147Z",
+        "updatedAt": "2024-04-30T04:21:22.147Z",
         "id": "661d8ad17fc88121e05ff037"
       },
       {
@@ -1763,8 +2087,8 @@
         "_id": "661d8ad17fc88121e05ff038",
         "isSelectedFile": false,
         "url": "https://assets.editor.p5js.org/615204259975c800247ed951/258bfe4c-a32f-4166-8f85-4745032ca38f.js",
-        "createdAt": "2024-04-15T20:19:18.537Z",
-        "updatedAt": "2024-04-15T20:19:18.537Z",
+        "createdAt": "2024-04-30T04:21:22.147Z",
+        "updatedAt": "2024-04-30T04:21:22.147Z",
         "id": "661d8ad17fc88121e05ff038"
       },
       {
@@ -1775,14 +2099,122 @@
         "_id": "661d8ad17fc88121e05ff039",
         "isSelectedFile": false,
         "url": "https://assets.editor.p5js.org/615204259975c800247ed951/ed2492c4-9bb0-4df5-b9ab-bc96e686c26b.js",
-        "createdAt": "2024-04-15T20:19:18.537Z",
-        "updatedAt": "2024-04-15T20:19:18.537Z",
+        "createdAt": "2024-04-30T04:21:22.147Z",
+        "updatedAt": "2024-04-30T04:21:22.147Z",
         "id": "661d8ad17fc88121e05ff039"
       }
     ],
     "createdAt": "2024-04-15T20:15:14.587Z",
-    "updatedAt": "2024-04-15T20:19:18.537Z",
+    "updatedAt": "2024-04-30T04:21:22.147Z",
     "id": "o82OaP2pP"
+  },
+  {
+    "name": "face tracking and rotating star copy",
+    "_id": "-eFYPRA50",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "662fb456a4a557001b2c7329",
+          "6627916a82c6b7646216016b",
+          "6627916a82c6b7646216016c",
+          "6627916a82c6b7646216016f",
+          "6627916a82c6b76462160170"
+        ],
+        "fileType": "folder",
+        "_id": "6627916a82c6b7646216016a",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T06:04:18.412Z",
+        "updatedAt": "2024-04-30T06:04:18.412Z",
+        "id": "6627916a82c6b7646216016a"
+      },
+      {
+        "name": "sketch.js",
+        "content": "// Face Tracking by jeeyeonr\n\nvar ctracker;\n\n/* \nif sound doesn't work click the gear button an select run in browser ON\n*/\nvar mic;\nvar volume = 0;\n\n\nlet fft\n\nlet Particle = function(position, direction, r,g,b){\n  this.position = createVector(width/2, height/2)\n  this.speed = 1\n  this.color = [r + random(-32,32),g+ random(-32,32),b+ random(-32,32)]\n  this.direction = direction\n  \n  this.draw = function(){\n    ellipse(this.position.x, this.position.y, this.diameter)\n    fill(this.color)\n    noStroke()\n  }\n  \n  this.update = function(energy){\n    this.speed = energy\n    this.diameter = random(5, 7) + energy * 50\n    this.position.x += this.speed * 10 * Math.sin(this.direction)\n    this.position.y += this.speed * 10 * Math.cos(this.direction)\n    if (this.position.y > width || this.position.x > height || this.position.y < 0 || this.position.x < 0) { \n      this.position = createVector(width/2, height/2)   \n    }\n  }\n}\n\n\nfunction setup() {\n  \n  // setup camera capture\n  var videoInput = createCapture(VIDEO);\n  videoInput.size(800, 600);\n  videoInput.position(0, 0);\n\n  //you can hide the video\n   videoInput.hide();\n\n  // setup canvas\n  //var cnv = createCanvas(800, 600);\n  //cnv.position(0, 0);\n  \n  cWidth = windowWidth;\n  cHeight = windowHeight;\n  createCanvas(cWidth, cHeight);\n\n  // setup tracker\n  ctracker = new clm.tracker();\n  ctracker.init(pModel);\n  ctracker.start(videoInput.elt);\n\n   // Create an Audio input\n  mic = new p5.AudioIn();\n\n  // start the Audio Input.\n  // By default, it does not .connect() (to the computer speakers)\n  mic.start();\n\n  noStroke();\n  \n\n  \n  fft = new p5.FFT()\n  fft.setInput(mic)\n  \n  positionParticles()\n}\n\nfunction windowResized() {\n  cWidth = windowWidth;\n  cHeight = windowHeight;\n  createCanvas(cWidth, cHeight);\n  resizeCanvas(cWidth, cHeight);\n  \n}\n\nfunction draw() {\n  background(0,0,0);\n  \n  let spectrum = fft.analyze()\n  updateParticles(spectrum)\n  \n  //similar to background but it will make transparent pixels\n  //and will not get rid of the camera feed if not hidden\n  //clear();\n  \n  // Get the overall volume (between 0 and 1.0)\n//   var v = mic.getLevel();\n//   // \"Smooth\" the volume variable with an easing function\n//   volume += (v-volume)/3;\n  \n//   //get the detection score, or how well the face is detected (from 0 to 1)\n   var detectionScore = ctracker.getScore();\n\n   if (detectionScore > 0) {\n    \n//     // get array of face marker positions [x, y] format\n     var positions = ctracker.getCurrentPosition();\n\n    /*\n    You can find all the points here\n    https://camo.githubusercontent.com/e967f92904c8ef84228b8950d3a278efb895b9d2/68747470733a2f2f617564756e6f2e6769746875622e696f2f636c6d747261636b722f6578616d706c65732f6d656469612f666163656d6f64656c5f6e756d626572696e675f6e65775f736d616c6c2e706e67\n    */\n\n    var leftEyeX = positions[32][0];\n    var leftEyeY = positions[32][1];\n\n    var rightEyeX = positions[27][0];\n    var rightEyeY = positions[27][1];\n\n    var noseX = positions[62][0];\n    var noseY = positions[62][1];\n    \n    var faceLeftX = positions[1][0];\n    var faceLeftY = positions[1][1];\n    var faceRightX = positions[13][0];\n    var faceRightY = positions[13][1];\n    \n    //the distance between the left point and the rightmost point is a good indication\n    //of the size of the face or proximity to the camera and I can use it to scale my graphic elements\n    var size = dist(faceLeftX,faceLeftY, faceRightX, faceRightY);\n    \n    //draw the face\n    fill(255,255,255,60);\n    ellipse(noseX, noseY, size, size);\n    \n    //draw a star on the nose\n    fill(255, 204, 0);\n    push(); // save the current state of transformation (i.e. rotation)\n    translate(noseX, noseY); // move the origin to the nose position\n    //rotate(frameCount / -50.0); // rotate by a small amount each frame\n    star(0, 0, 20, 50, 5); // draw the star at the origin\n    pop(); // restore the previous state of transformation\n    \n    \n\n    /////When you click the mouse this draws all the detected positions\n    if(mouseIsPressed) {\n    for (var i = 0; i < positions.length; i++) {\n      // set the color of the ellipse based on position on screen\n      fill(255, 0, 0);\n      // draw ellipse at each position point\n      ellipse(positions[i][0], positions[i][1], 4, 4);\n    }\n    }\n\n  \n  \n  //image(pg, 0,0);\n  // for colorful audio reactive particles\n  stroke(255);\n  let t = 0\n  for(i=0;i++<2000;a= noise(i%64.0)*9+t/r, point(400+cos(a)*r, 200+sin(a)*r/2.0)){\n     r=abs(noise(i)-.2)*500;\n     t+=0.001;\n  }\n\n  }\n}\n\n// Function to draw a star for face\nfunction star(x, y, radius1, radius2, npoints) {\n  var angle = TWO_PI / npoints;\n  var halfAngle = angle / 2.0;\n  beginShape();\n  for (var a = 0; a < TWO_PI; a += angle) {\n    var sx = x + cos(a) * radius2;\n    var sy = y + sin(a) * radius2;\n    vertex(sx, sy);\n    sx = x + cos(a + halfAngle) * radius1;\n    sy = y + sin(a + halfAngle) * radius1;\n    vertex(sx, sy);\n  }\n  endShape(CLOSE);\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "6627916a82c6b7646216016f",
+        "isSelectedFile": true,
+        "createdAt": "2024-04-30T06:04:18.412Z",
+        "updatedAt": "2024-04-30T06:04:18.412Z",
+        "id": "6627916a82c6b7646216016f"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html>\n  <head>\n    <script src=\"libraries/clmtrackr.js\"></script>\n    <script src=\"libraries/model_pca_20_svm.js\"></script>\n    \n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.sound.min.js\"></script>\n    \n    \n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n    <script src=\"galaxyManager.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6627916a82c6b7646216016b",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T06:04:18.412Z",
+        "updatedAt": "2024-04-30T06:04:18.412Z",
+        "id": "6627916a82c6b7646216016b"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6627916a82c6b76462160170",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T06:04:18.412Z",
+        "updatedAt": "2024-04-30T06:04:18.412Z",
+        "id": "6627916a82c6b76462160170"
+      },
+      {
+        "name": "libraries",
+        "content": "",
+        "children": [
+          "6627916a82c6b7646216016d",
+          "6627916a82c6b7646216016e"
+        ],
+        "fileType": "folder",
+        "_id": "6627916a82c6b7646216016c",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T06:04:18.412Z",
+        "updatedAt": "2024-04-30T06:04:18.412Z",
+        "id": "6627916a82c6b7646216016c"
+      },
+      {
+        "name": "clmtrackr.js",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "6627916a82c6b7646216016d",
+        "isSelectedFile": false,
+        "url": "https://assets.editor.p5js.org/615204259975c800247ed951/f9aa33b1-493f-4b7b-a7b0-2d5028de93b5.js",
+        "createdAt": "2024-04-30T06:04:18.412Z",
+        "updatedAt": "2024-04-30T06:04:18.412Z",
+        "id": "6627916a82c6b7646216016d"
+      },
+      {
+        "name": "model_pca_20_svm.js",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "6627916a82c6b7646216016e",
+        "isSelectedFile": false,
+        "url": "https://assets.editor.p5js.org/615204259975c800247ed951/6427b785-b431-4d93-ad7f-9f9313c26ac6.js",
+        "createdAt": "2024-04-30T06:04:18.412Z",
+        "updatedAt": "2024-04-30T06:04:18.412Z",
+        "id": "6627916a82c6b7646216016e"
+      },
+      {
+        "name": "galaxyManager.js",
+        "content": "const binCount = 1024\nlet particles = new Array(binCount)\n\nfunction positionParticles() {\n  // takes array of particles\n  // puts the 'tickle' in par-tickle\n  for (let i = 0; i < particles.length; i++) {\n    let x = map(i, 0, binCount, 0, width * 2) // expands the particles to fit your screen using p5.map\n    let y = random(0, height)\n    let direction = map(i, 0, binCount, 0, 360)\n    let position = createVector(x, y)\n    let r = map(i, 0, binCount, 33, 223)\n    let g = map(i, 0, binCount, 33, 223)\n    let b = map(i, 0, binCount, 33, 223)\n    let partickle = new Particle(position, direction, r,g,b)\n    particles[i] = partickle\n  }\n}\n\nfunction updateParticles(spectrum) {\n  // update and draw all [binCount] particles!\n  // Each particle gets a level that corresponds to\n  // the level at one bin of the FFT spectrum. \n  // This level is like amplitude, often called \"energy.\"\n  // It will be a number between 0-255.\n  spectrum.forEach((bin, i) => {\n    let binLevel = map(bin, 0, 255, 0, 1)\n    particles[i].update(binLevel)\n    particles[i].draw()\n  })\n}\n\n// Only for drawing static particles in one section of the workshop\nfunction drawParticles() {\n  particles.forEach(particle => {\n    particle.diameter = 5\n    particle.draw()\n  })\n}\n\nfunction touchStarted() {\n  if (getAudioContext().state !== 'running') {\n    getAudioContext().resume()\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "662fb456a4a557001b2c7329",
+        "isSelectedFile": false,
+        "updatedAt": "2024-04-30T06:04:18.412Z",
+        "createdAt": "2024-04-30T06:04:18.412Z",
+        "id": "662fb456a4a557001b2c7329"
+      }
+    ],
+    "createdAt": "2024-04-23T10:46:03.456Z",
+    "updatedAt": "2024-04-30T06:04:18.412Z",
+    "id": "-eFYPRA50"
   },
   {
     "name": "Face Tracking copy",
@@ -3442,6 +3874,120 @@
     "id": "jbAN-fULr"
   },
   {
+    "name": "ims-05-Ann",
+    "_id": "0faTg5CBr",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "662791eb42c059f276454ca8",
+          "662791eb42c059f276454ca9",
+          "662791eb42c059f276454caa"
+        ],
+        "fileType": "folder",
+        "_id": "662791eb42c059f276454ca7",
+        "createdAt": "2024-04-23T10:53:09.513Z",
+        "updatedAt": "2024-04-23T10:53:09.513Z",
+        "isSelectedFile": false,
+        "id": "662791eb42c059f276454ca7"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let colors = \"ffc857-e9724c-c5283d-481d24-255f85-a9e5bb-2d1e2f-777da7-94c9a9-074f57\".split(\"-\").map(a => \"#\" + a);\nlet total;\n\nfunction setup() {\n    createCanvas(window.innerWidth, window.innerHeight);\n    noStroke()\n    total = 1200;\n}\n\nfunction draw() {\n    background(0);\n    push();\n    translate(width / 2, height / 2);\n    rotate(frameCount * 0.03);\n    for (let i = 0; i < total; i++) {\n        let angle = sin(i + frameCount * 0.02) * 60;\n        let angle2 = cos(i + frameCount * 0.004) * 800;\n\n        let inc = 85;\n        let waveX = map(sin(frameCount * 0.01), -1, 1, -inc, inc);\n        let waveY = map(cos(frameCount * 0.01), -1, 1, -inc, inc);\n\n        let a = -394;\n        let x = sin(radians(i)) * (angle2 + a) + waveX;\n        let y = cos(radians(i)) * (angle2 + a) + waveY;\n\n        // let w = 860;\n        // let x1 = sin(radians(i)) * (w / angle);\n        // let y1 = cos(radians(i)) * (w / angle);\n\t\t\t\t\n\t    fill(255);\n\t\tcircle(x, y, 1);\n\t\tlet size = map(sin(i * frameCount * 0.0002), -1, 1, 0, 4);\n\t\tfill(colors[i % colors.length]);\n\t\t//circle(x1, y1, size);\n    }\n    pop();\n}\n\nfunction windowResized() {\n    resizeCanvas(windowWidth, windowHeight);\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "662791eb42c059f276454ca9",
+        "isSelectedFile": true,
+        "createdAt": "2024-04-23T10:53:09.513Z",
+        "updatedAt": "2024-04-23T10:53:09.513Z",
+        "id": "662791eb42c059f276454ca9"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "662791eb42c059f276454ca8",
+        "createdAt": "2024-04-23T10:53:09.513Z",
+        "updatedAt": "2024-04-23T10:53:09.513Z",
+        "isSelectedFile": false,
+        "id": "662791eb42c059f276454ca8"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "662791eb42c059f276454caa",
+        "createdAt": "2024-04-23T10:53:09.513Z",
+        "updatedAt": "2024-04-23T10:53:09.513Z",
+        "isSelectedFile": false,
+        "id": "662791eb42c059f276454caa"
+      }
+    ],
+    "createdAt": "2024-04-23T10:48:11.920Z",
+    "updatedAt": "2024-04-23T10:53:09.513Z",
+    "id": "0faTg5CBr"
+  },
+  {
+    "name": "ims-05-Ann copy",
+    "_id": "VOQ6CsA8e",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "662793e642c059f276454cac",
+          "662793e642c059f276454cad",
+          "662793e642c059f276454cae"
+        ],
+        "fileType": "folder",
+        "_id": "662793e642c059f276454cab",
+        "createdAt": "2024-04-23T10:58:46.614Z",
+        "updatedAt": "2024-04-23T10:58:46.614Z",
+        "isSelectedFile": false,
+        "id": "662793e642c059f276454cab"
+      },
+      {
+        "name": "sketch.js",
+        "content": "// https://www.youtube.com/watch?v=JLAc9hMtcxk (Coding train tutorial on sine waves)\n\n\nlet total;\n\nfunction setup() {\n    createCanvas(window.innerWidth, window.innerHeight);\n    noStroke()\n    total = 1200;\n}\n\nfunction draw() {\n    r = random(255); \n    g = random(100,200); \n    b = random(100); \n    a = random(200,255);\n  \n    background(0);\n    push();\n    translate(width / 2, height / 2);\n    rotate(frameCount * 0.03);\n    for (let i = 0; i < total; i++) {\n        let angle = sin(i + frameCount * 0.02) * 60;\n        let angle2 = cos(i + frameCount * 0.004) * 800;\n\n        let inc = 85;\n        let waveX = map(sin(frameCount * 0.01), -1, 1, -inc, inc);\n        let waveY = map(cos(frameCount * 0.01), -1, 1, -inc, inc);\n\n        let a = -394;\n        let x = sin(radians(i)) * (angle2 + a) + waveX;\n        let y = cos(radians(i)) * (angle2 + a) + waveY;\n\n\t\t\t\t\n\t    fill(255);\n\t\tcircle(x, y, 1);\n\t\tlet size = map(sin(i * frameCount * 0.0002), -1, 1, 0, 4);\n\t\tfill(r, g, b, a);\n      // not sure why this part is not working. I wanted it to be more visible + random colors\n    }\n    pop();\n}\n\nfunction windowResized() {\n    resizeCanvas(windowWidth, windowHeight);\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "662793e642c059f276454cad",
+        "isSelectedFile": true,
+        "createdAt": "2024-04-23T10:58:46.614Z",
+        "updatedAt": "2024-04-23T10:58:46.614Z",
+        "id": "662793e642c059f276454cad"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "662793e642c059f276454cac",
+        "createdAt": "2024-04-23T10:58:46.614Z",
+        "updatedAt": "2024-04-23T10:58:46.614Z",
+        "isSelectedFile": false,
+        "id": "662793e642c059f276454cac"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "662793e642c059f276454cae",
+        "createdAt": "2024-04-23T10:58:46.614Z",
+        "updatedAt": "2024-04-23T10:58:46.614Z",
+        "isSelectedFile": false,
+        "id": "662793e642c059f276454cae"
+      }
+    ],
+    "createdAt": "2024-04-23T10:56:38.802Z",
+    "updatedAt": "2024-04-23T10:58:46.614Z",
+    "id": "VOQ6CsA8e"
+  },
+  {
     "name": "interactive drum kit",
     "_id": "KYNpphRIp",
     "updatedAt": "2022-02-28T19:31:01.815Z",
@@ -3657,6 +4203,294 @@
     ],
     "createdAt": "2022-03-23T04:08:34.622Z",
     "id": "8kc7c4MdZ"
+  },
+  {
+    "name": "Interactive_Galaxy",
+    "_id": "wGoASExM_",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "66309399fcf05d6e9f5e62df",
+          "66309399fcf05d6e9f5e62e0",
+          "66309399fcf05d6e9f5e62e3",
+          "66309399fcf05d6e9f5e62e4"
+        ],
+        "fileType": "folder",
+        "_id": "66309399fcf05d6e9f5e62de",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T08:45:10.306Z",
+        "updatedAt": "2024-04-30T08:45:10.306Z",
+        "id": "66309399fcf05d6e9f5e62de"
+      },
+      {
+        "name": "sketch.js",
+        "content": "// Face Tracking by jeeyeonr\n// https://editor.p5js.org/jeeyeonr/sketches/Hyy5W3GiQ\n\n// Galaxy\n// https://editor.p5js.org/makeea/sketches/S2EbH1g0M\n// https://editor.p5js.org/jorge_droide/sketches/-q0zCTeHC\n// More tutorials and sketches on my github page\n\n// face tracker\nvar ctracker;\n\n//array for particles\nconst binCount = 1024;\nlet particles = new Array(binCount);\nlet fft;\n\n// particle class\nlet Particle = function(position, direction, r, g, b) {\n    this.position = createVector(windowWidth / 2, windowHeight / 2);\n    this.speed = 1;\n    this.color = [r + random(-32, 32), g + random(-32, 32), b + random(-32, 32)];\n    this.direction = direction;\n\n    this.draw = function() {\n        ellipse(this.position.x, this.position.y, this.diameter);\n        fill(this.color);\n    };\n\n  // update based on energy\n    this.update = function(energy) {\n        this.speed = energy;\n        this.diameter = random(5, 7) + energy * 50;\n        this.position.x += this.speed * 10 * Math.sin(this.direction);\n        this.position.y += this.speed * 10 * Math.cos(this.direction);\n    };\n};\n\nfunction setup() {\n    createCanvas(windowWidth, windowHeight);\n    noStroke(); \n\n  // audio input for particles + set source\n    let mic = new p5.AudioIn();\n    mic.start();\n    fft = new p5.FFT();\n    fft.setInput(mic);\n\n  // main particles\n    positionParticles();\n  \n  // define video input (mac webcam)\n  var videoInput = createCapture(VIDEO);\n  //make webcam video size of screen and hide\n  videoInput.size(windowWidth, windowHeight);\n  videoInput.hide();\n  \n  // initialize face tracker  \n  ctracker = new clm.tracker();\n  ctracker.init(pModel);\n  ctracker.start(videoInput.elt);\n}\n\nfunction draw() {\n    background(0);\n    drawBackgroundArtwork();\n  \n  //analyze audio and draw particles depending on volume\n    let spectrum = fft.analyze();\n    updateParticles(spectrum);\n  \n  // check if face trackers works, 0 is no face detected\n    var detectionScore = ctracker.getScore();\n  if (detectionScore > 0) {\n    // get array of face marker positions [x, y] format\n    var positions = ctracker.getCurrentPosition();\n    \n    // Extract nose position\n    var noseX = positions[62][0];\n    var noseY = positions[62][1];\n    \n    // Draw the face ellipse\n    var size = dist(positions[1][0], positions[1][1], positions[13][0], positions[13][1]);\n    fill(255, 255, 255, 60);\n    ellipse(noseX, noseY, size/2, size/2);\n    \n    // Draw a star on the nose\n    fill(255, 204, 0);\n    push();\n    translate(noseX, noseY);\n    rotate(frameCount / -50.0); \n    star(0, 0, 20, 50, 5); \n    pop(); \n   \n    // Draw eyes\n    // fill(255);\n    // ellipse(positions[27][0], positions[27][1], 10, 10);\n    // ellipse(positions[32][0], positions[32][1], 10, 10);\n\n    // Draw additional facial landmarks if mouse is pressed\n    if (mouseIsPressed) {\n        for (var i = 0; i < positions.length; i++) {\n            fill(255, 0, 0);\n            ellipse(positions[i][0], positions[i][1], 4, 4);\n        }\n    }\n}\n \n}\n\nfunction windowResized() {\n    resizeCanvas(windowWidth, windowHeight);\n}\n\nfunction positionParticles() {\n    for (let i = 0; i < particles.length; i++) {\n        let x = random(0, width);\n        let y = random(0, height);\n        let direction = map(i, 0, binCount, 0, 360);\n        let position = createVector(x, y);\n        let r = map(i, 0, binCount, 33, 223);\n        let g = map(i, 0, binCount, 33, 223);\n        let b = map(i, 0, binCount, 33, 223);\n        let partickle = new Particle(position, direction, r, g, b);\n        particles[i] = partickle;\n    }\n}\n\nfunction updateParticles(spectrum) {\n  // random particles\n    spectrum.forEach((bin, i) => {\n        let binLevel = map(bin, 0, 255, 0, 1);\n        particles[i].update(binLevel);\n        particles[i].draw();\n    });\n}\n\n// white spiral star\nfunction drawBackgroundArtwork() {\n    let total;\n    total = 1200;\n\n    push();\n    translate(width / 2, height / 2); // Translate to the center of the screen\n    for (let i = 0; i < total; i++) {\n        let angle = sin(i + frameCount * 0.02) * 60;\n        let angle2 = cos(i + frameCount * 0.004) * 800;\n\n        let inc = 85;\n        let waveX = map(sin(frameCount * 0.01), -1, 1, -inc, inc);\n        let waveY = map(cos(frameCount * 0.01), -1, 1, -inc, inc);\n\n        let a = -394;\n        let x = sin(radians(i)) * (angle2 + a) + waveX;\n        let y = cos(radians(i)) * (angle2 + a) + waveY;\n\n        fill(255);\n        ellipse(x, y, 1);\n        let size = map(sin(i * frameCount * 0.0002), -1, 1, 0, 4);\n        fill(random(255), random(100, 200), random(100), random(200, 255));\n        stroke(200);\n        strokeWeight(4);\n    }\n    pop();\n}\n\n// Function to draw a star for face\nfunction star(x, y, radius1, radius2, npoints) {\n  var angle = TWO_PI / npoints;\n  var halfAngle = angle / 2.0;\n  beginShape();\n  for (var a = 0; a < TWO_PI; a += angle) {\n    var sx = x + cos(a) * radius2;\n    var sy = y + sin(a) * radius2;\n    vertex(sx, sy);\n    sx = x + cos(a + halfAngle) * radius1;\n    sy = y + sin(a + halfAngle) * radius1;\n    vertex(sx, sy);\n  }\n  endShape(CLOSE);\n}\n\n// audio debug\nfunction touchStarted() {\n    if (getAudioContext().state !== 'running') {\n        getAudioContext().resume();\n    }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "66309399fcf05d6e9f5e62e3",
+        "isSelectedFile": true,
+        "createdAt": "2024-04-30T08:45:10.306Z",
+        "updatedAt": "2024-04-30T08:45:10.306Z",
+        "id": "66309399fcf05d6e9f5e62e3"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html>\n  <head>\n    <script src=\"libraries/clmtrackr.js\"></script>\n    <script src=\"libraries/model_pca_20_svm.js\"></script>\n    \n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "66309399fcf05d6e9f5e62df",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T08:45:10.306Z",
+        "updatedAt": "2024-04-30T08:45:10.306Z",
+        "id": "66309399fcf05d6e9f5e62df"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "66309399fcf05d6e9f5e62e4",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T08:45:10.306Z",
+        "updatedAt": "2024-04-30T08:45:10.306Z",
+        "id": "66309399fcf05d6e9f5e62e4"
+      },
+      {
+        "name": "libraries",
+        "content": "",
+        "children": [
+          "66309399fcf05d6e9f5e62e1",
+          "66309399fcf05d6e9f5e62e2"
+        ],
+        "fileType": "folder",
+        "_id": "66309399fcf05d6e9f5e62e0",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T08:45:10.306Z",
+        "updatedAt": "2024-04-30T08:45:10.306Z",
+        "id": "66309399fcf05d6e9f5e62e0"
+      },
+      {
+        "name": "clmtrackr.js",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "66309399fcf05d6e9f5e62e1",
+        "isSelectedFile": false,
+        "url": "https://assets.editor.p5js.org/615204259975c800247ed951/8cb4573e-8aaf-4bf1-8076-5a18d0c8806d.js",
+        "createdAt": "2024-04-30T08:45:10.306Z",
+        "updatedAt": "2024-04-30T08:45:10.306Z",
+        "id": "66309399fcf05d6e9f5e62e1"
+      },
+      {
+        "name": "model_pca_20_svm.js",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "66309399fcf05d6e9f5e62e2",
+        "isSelectedFile": false,
+        "url": "https://assets.editor.p5js.org/615204259975c800247ed951/15cc39e0-5992-4cae-8018-e37d1e40c159.js",
+        "createdAt": "2024-04-30T08:45:10.306Z",
+        "updatedAt": "2024-04-30T08:45:10.306Z",
+        "id": "66309399fcf05d6e9f5e62e2"
+      }
+    ],
+    "createdAt": "2024-04-30T06:45:47.416Z",
+    "updatedAt": "2024-04-30T08:45:10.306Z",
+    "id": "wGoASExM_"
+  },
+  {
+    "name": "Interactive_Galaxy copy",
+    "_id": "emrca3kkz",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "6630aba368cfe5660fbbd1f1",
+          "6630aba368cfe5660fbbd1f2",
+          "6630aba368cfe5660fbbd1f5",
+          "6630aba368cfe5660fbbd1f6"
+        ],
+        "fileType": "folder",
+        "_id": "6630aba368cfe5660fbbd1f0",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T08:43:42.638Z",
+        "updatedAt": "2024-04-30T08:43:42.638Z",
+        "id": "6630aba368cfe5660fbbd1f0"
+      },
+      {
+        "name": "sketch.js",
+        "content": "// Face Tracking by jeeyeonr\n// https://editor.p5js.org/jeeyeonr/sketches/Hyy5W3GiQ\n\n// Galaxy\n// https://editor.p5js.org/makeea/sketches/S2EbH1g0M\n// https://editor.p5js.org/jorge_droide/sketches/-q0zCTeHC\n//\n\n// \n\n// face tracker\nvar ctracker;\n\n//array for particles\nconst binCount = 1024;\nlet particles = new Array(binCount);\nlet fft;\n\n// particle class\nlet Particle = function(position, direction, r, g, b) {\n    this.position = createVector(windowWidth / 2, windowHeight / 2);\n    this.speed = 1;\n    this.color = [r + random(-32, 32), g + random(-32, 32), b + random(-32, 32)];\n    this.direction = direction;\n\n    this.draw = function() {\n        ellipse(this.position.x, this.position.y, this.diameter);\n        fill(this.color);\n    };\n\n  // update based on energy\n    this.update = function(energy) {\n        this.speed = energy;\n        this.diameter = random(5, 7) + energy * 50;\n        this.position.x += this.speed * 10 * Math.sin(this.direction);\n        this.position.y += this.speed * 10 * Math.cos(this.direction);\n    };\n};\n\nfunction setup() {\n    createCanvas(windowWidth, windowHeight);\n    noStroke(); \n\n  // audio input for particles + set source\n    let mic = new p5.AudioIn();\n    mic.start();\n    fft = new p5.FFT();\n    fft.setInput(mic);\n\n  // main particles\n    positionParticles();\n  \n  // define video input (mac webcam)\n  var videoInput = createCapture(VIDEO);\n  //make webcam video size of screen and hide\n  videoInput.size(windowWidth, windowHeight);\n  videoInput.hide();\n  \n  // initialize face tracker  \n  ctracker = new clm.tracker();\n  ctracker.init(pModel);\n  ctracker.start(videoInput.elt);\n}\n\nfunction draw() {\n    background(0);\n    drawBackgroundArtwork();\n  \n  //analyze audio and draw particles depending on volume\n    let spectrum = fft.analyze();\n    updateParticles(spectrum);\n  \n  // check if face trackers works, 0 is no face detected\n    var detectionScore = ctracker.getScore();\n  if (detectionScore > 0) {\n    // get array of face marker positions [x, y] format\n    var positions = ctracker.getCurrentPosition();\n    \n    // Extract nose position\n    var noseX = positions[62][0];\n    var noseY = positions[62][1];\n    \n    // Draw the face ellipse\n    var size = dist(positions[1][0], positions[1][1], positions[13][0], positions[13][1]);\n    fill(255, 255, 255, 60);\n    ellipse(noseX, noseY, size/2, size/2);\n    \n    // Draw a star on the nose\n    fill(255, 204, 0);\n    push();\n    translate(noseX, noseY);\n    rotate(frameCount / -50.0); \n    star(0, 0, 20, 50, 5); \n    pop(); \n   \n    // Draw eyes\n    // fill(255);\n    // ellipse(positions[27][0], positions[27][1], 10, 10);\n    // ellipse(positions[32][0], positions[32][1], 10, 10);\n\n    // Draw additional facial landmarks if mouse is pressed\n    if (mouseIsPressed) {\n        for (var i = 0; i < positions.length; i++) {\n            fill(255, 0, 0);\n            ellipse(positions[i][0], positions[i][1], 4, 4);\n        }\n    }\n}\n \n}\n\nfunction windowResized() {\n    resizeCanvas(windowWidth, windowHeight);\n}\n\nfunction positionParticles() {\n    for (let i = 0; i < particles.length; i++) {\n        let x = random(0, width);\n        let y = random(0, height);\n        let direction = map(i, 0, binCount, 0, 360);\n        let position = createVector(x, y);\n        let r = map(i, 0, binCount, 33, 223);\n        let g = map(i, 0, binCount, 33, 223);\n        let b = map(i, 0, binCount, 33, 223);\n        let partickle = new Particle(position, direction, r, g, b);\n        particles[i] = partickle;\n    }\n}\n\nfunction updateParticles(spectrum) {\n  // random particles\n    spectrum.forEach((bin, i) => {\n        let binLevel = map(bin, 0, 255, 0, 1);\n        particles[i].update(binLevel);\n        particles[i].draw();\n    });\n}\n\n// white spiral star\nfunction drawBackgroundArtwork() {\n    let total;\n    total = 1200;\n\n    push();\n    translate(width / 2, height / 2); // Translate to the center of the screen\n    for (let i = 0; i < total; i++) {\n        let angle = sin(i + frameCount * 0.02) * 60;\n        let angle2 = cos(i + frameCount * 0.004) * 800;\n\n        let inc = 85;\n        let waveX = map(sin(frameCount * 0.01), -1, 1, -inc, inc);\n        let waveY = map(cos(frameCount * 0.01), -1, 1, -inc, inc);\n\n        let a = -394;\n        let x = sin(radians(i)) * (angle2 + a) + waveX;\n        let y = cos(radians(i)) * (angle2 + a) + waveY;\n\n        fill(255);\n        ellipse(x, y, 1);\n        let size = map(sin(i * frameCount * 0.0002), -1, 1, 0, 4);\n        fill(random(255), random(100, 200), random(100), random(200, 255));\n        stroke(200);\n        strokeWeight(4);\n    }\n    pop();\n}\n\n// Function to draw a star for face\nfunction star(x, y, radius1, radius2, npoints) {\n  var angle = TWO_PI / npoints;\n  var halfAngle = angle / 2.0;\n  beginShape();\n  for (var a = 0; a < TWO_PI; a += angle) {\n    var sx = x + cos(a) * radius2;\n    var sy = y + sin(a) * radius2;\n    vertex(sx, sy);\n    sx = x + cos(a + halfAngle) * radius1;\n    sy = y + sin(a + halfAngle) * radius1;\n    vertex(sx, sy);\n  }\n  endShape(CLOSE);\n}\n\n// audio debug\nfunction touchStarted() {\n    if (getAudioContext().state !== 'running') {\n        getAudioContext().resume();\n    }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6630aba368cfe5660fbbd1f5",
+        "isSelectedFile": true,
+        "createdAt": "2024-04-30T08:43:42.638Z",
+        "updatedAt": "2024-04-30T08:43:42.638Z",
+        "id": "6630aba368cfe5660fbbd1f5"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html>\n  <head>\n    <script src=\"libraries/clmtrackr.js\"></script>\n    <script src=\"libraries/model_pca_20_svm.js\"></script>\n    \n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6630aba368cfe5660fbbd1f1",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T08:43:42.638Z",
+        "updatedAt": "2024-04-30T08:43:42.638Z",
+        "id": "6630aba368cfe5660fbbd1f1"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "6630aba368cfe5660fbbd1f6",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T08:43:42.638Z",
+        "updatedAt": "2024-04-30T08:43:42.638Z",
+        "id": "6630aba368cfe5660fbbd1f6"
+      },
+      {
+        "name": "libraries",
+        "content": "",
+        "children": [
+          "6630aba368cfe5660fbbd1f3",
+          "6630aba368cfe5660fbbd1f4"
+        ],
+        "fileType": "folder",
+        "_id": "6630aba368cfe5660fbbd1f2",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T08:43:42.638Z",
+        "updatedAt": "2024-04-30T08:43:42.638Z",
+        "id": "6630aba368cfe5660fbbd1f2"
+      },
+      {
+        "name": "clmtrackr.js",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "6630aba368cfe5660fbbd1f3",
+        "isSelectedFile": false,
+        "url": "https://assets.editor.p5js.org/615204259975c800247ed951/852b822f-c0f3-4c41-bee7-4fb6074476e2.js",
+        "createdAt": "2024-04-30T08:43:42.638Z",
+        "updatedAt": "2024-04-30T08:43:42.638Z",
+        "id": "6630aba368cfe5660fbbd1f3"
+      },
+      {
+        "name": "model_pca_20_svm.js",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "6630aba368cfe5660fbbd1f4",
+        "isSelectedFile": false,
+        "url": "https://assets.editor.p5js.org/615204259975c800247ed951/a3a643c5-0e07-4caf-8a03-9b169ead8bea.js",
+        "createdAt": "2024-04-30T08:43:42.638Z",
+        "updatedAt": "2024-04-30T08:43:42.638Z",
+        "id": "6630aba368cfe5660fbbd1f4"
+      }
+    ],
+    "createdAt": "2024-04-30T08:28:20.566Z",
+    "updatedAt": "2024-04-30T08:43:42.638Z",
+    "id": "emrca3kkz"
+  },
+  {
+    "name": "Interactive_Screens_Final",
+    "_id": "y3BSfUsrS",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "66308a9bfcf05d6e9f5e62d8",
+          "66308a9bfcf05d6e9f5e62d9",
+          "66308a9bfcf05d6e9f5e62dc",
+          "66308a9bfcf05d6e9f5e62dd"
+        ],
+        "fileType": "folder",
+        "_id": "66308a9bfcf05d6e9f5e62d7",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T06:45:43.704Z",
+        "updatedAt": "2024-04-30T06:45:43.704Z",
+        "id": "66308a9bfcf05d6e9f5e62d7"
+      },
+      {
+        "name": "sketch.js",
+        "content": "// face tracker\nvar ctracker;\n\n//array for particles\nconst binCount = 1024;\nlet particles = new Array(binCount);\nlet fft;\n\n// particle class\nlet Particle = function(position, direction, r, g, b) {\n    this.position = createVector(windowWidth / 2, windowHeight / 2);\n    this.speed = 1;\n    this.color = [r + random(-32, 32), g + random(-32, 32), b + random(-32, 32)];\n    this.direction = direction;\n\n    this.draw = function() {\n        ellipse(this.position.x, this.position.y, this.diameter);\n        fill(this.color);\n    };\n\n  // update based on energy\n    this.update = function(energy) {\n        this.speed = energy;\n        this.diameter = random(5, 7) + energy * 50;\n        this.position.x += this.speed * 10 * Math.sin(this.direction);\n        this.position.y += this.speed * 10 * Math.cos(this.direction);\n    };\n};\n\nfunction setup() {\n    createCanvas(windowWidth, windowHeight);\n    noStroke(); \n\n  // audio input for particles + set source\n    let mic = new p5.AudioIn();\n    mic.start();\n    fft = new p5.FFT();\n    fft.setInput(mic);\n\n  // main particles\n    positionParticles();\n  \n  // define video input (mac webcam)\n  var videoInput = createCapture(VIDEO);\n  \n  // initialize face tracker  \n  ctracker = new clm.tracker();\n  ctracker.init(pModel);\n  ctracker.start(videoInput.elt);\n}\n\nfunction draw() {\n    background(0);\n    drawBackgroundArtwork();\n  \n  //analyze audio and draw particles depending on volume\n    let spectrum = fft.analyze();\n    updateParticles(spectrum);\n  \n  // check if face trackers works, 0 is no face detected\n    var detectionScore = ctracker.getScore();\n  if (detectionScore > 0) {\n    // get array of face marker positions [x, y] format\n    var positions = ctracker.getCurrentPosition();\n    \n    // Extract nose position\n    var noseX = positions[62][0];\n    var noseY = positions[62][1];\n    \n    // Draw the face ellipse\n    var size = dist(positions[1][0], positions[1][1], positions[13][0], positions[13][1]);\n    fill(255, 255, 255, 60);\n    ellipse(noseX, noseY, size, size);\n    \n    // Draw a star on the nose\n    fill(255, 204, 0);\n    push();\n    translate(noseX, noseY);\n    rotate(frameCount / -50.0); \n    star(0, 0, 20, 50, 5); \n    pop(); \n   \n    // Draw eyes\n    // fill(255);\n    // ellipse(positions[27][0], positions[27][1], 10, 10);\n    // ellipse(positions[32][0], positions[32][1], 10, 10);\n\n    // Draw additional facial landmarks if mouse is pressed\n    if (mouseIsPressed) {\n        for (var i = 0; i < positions.length; i++) {\n            fill(255, 0, 0);\n            ellipse(positions[i][0], positions[i][1], 4, 4);\n        }\n    }\n}\n \n}\n\nfunction windowResized() {\n    resizeCanvas(windowWidth, windowHeight);\n}\n\nfunction positionParticles() {\n    for (let i = 0; i < particles.length; i++) {\n        let x = random(0, width);\n        let y = random(0, height);\n        let direction = map(i, 0, binCount, 0, 360);\n        let position = createVector(x, y);\n        let r = map(i, 0, binCount, 33, 223);\n        let g = map(i, 0, binCount, 33, 223);\n        let b = map(i, 0, binCount, 33, 223);\n        let partickle = new Particle(position, direction, r, g, b);\n        particles[i] = partickle;\n    }\n}\n\nfunction updateParticles(spectrum) {\n  // random particles\n    spectrum.forEach((bin, i) => {\n        let binLevel = map(bin, 0, 255, 0, 1);\n        particles[i].update(binLevel);\n        particles[i].draw();\n    });\n}\n\n// white spiral star\nfunction drawBackgroundArtwork() {\n    let total;\n    total = 1200;\n\n    push();\n    translate(width / 2, height / 2); // Translate to the center of the screen\n    for (let i = 0; i < total; i++) {\n        let angle = sin(i + frameCount * 0.02) * 60;\n        let angle2 = cos(i + frameCount * 0.004) * 800;\n\n        let inc = 85;\n        let waveX = map(sin(frameCount * 0.01), -1, 1, -inc, inc);\n        let waveY = map(cos(frameCount * 0.01), -1, 1, -inc, inc);\n\n        let a = -394;\n        let x = sin(radians(i)) * (angle2 + a) + waveX;\n        let y = cos(radians(i)) * (angle2 + a) + waveY;\n\n        fill(255);\n        ellipse(x, y, 1);\n        let size = map(sin(i * frameCount * 0.0002), -1, 1, 0, 4);\n        fill(random(255), random(100, 200), random(100), random(200, 255));\n    }\n    pop();\n}\n\n// Function to draw a star for face\nfunction star(x, y, radius1, radius2, npoints) {\n  var angle = TWO_PI / npoints;\n  var halfAngle = angle / 2.0;\n  beginShape();\n  for (var a = 0; a < TWO_PI; a += angle) {\n    var sx = x + cos(a) * radius2;\n    var sy = y + sin(a) * radius2;\n    vertex(sx, sy);\n    sx = x + cos(a + halfAngle) * radius1;\n    sy = y + sin(a + halfAngle) * radius1;\n    vertex(sx, sy);\n  }\n  endShape(CLOSE);\n}\n\n// audio debug\nfunction touchStarted() {\n    if (getAudioContext().state !== 'running') {\n        getAudioContext().resume();\n    }\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "66308a9bfcf05d6e9f5e62dc",
+        "isSelectedFile": true,
+        "createdAt": "2024-04-30T06:45:43.704Z",
+        "updatedAt": "2024-04-30T06:45:43.704Z",
+        "id": "66308a9bfcf05d6e9f5e62dc"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html>\n  <head>\n    <script src=\"libraries/clmtrackr.js\"></script>\n    <script src=\"libraries/model_pca_20_svm.js\"></script>\n    \n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.sound.min.js\"></script>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "66308a9bfcf05d6e9f5e62d8",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T06:45:43.704Z",
+        "updatedAt": "2024-04-30T06:45:43.704Z",
+        "id": "66308a9bfcf05d6e9f5e62d8"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "66308a9bfcf05d6e9f5e62dd",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T06:45:43.704Z",
+        "updatedAt": "2024-04-30T06:45:43.704Z",
+        "id": "66308a9bfcf05d6e9f5e62dd"
+      },
+      {
+        "name": "libraries",
+        "content": "",
+        "children": [
+          "66308a9bfcf05d6e9f5e62da",
+          "66308a9bfcf05d6e9f5e62db"
+        ],
+        "fileType": "folder",
+        "_id": "66308a9bfcf05d6e9f5e62d9",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-30T06:45:43.704Z",
+        "updatedAt": "2024-04-30T06:45:43.704Z",
+        "id": "66308a9bfcf05d6e9f5e62d9"
+      },
+      {
+        "name": "clmtrackr.js",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "66308a9bfcf05d6e9f5e62da",
+        "isSelectedFile": false,
+        "url": "https://assets.editor.p5js.org/615204259975c800247ed951/e4f9158e-1b01-4ed7-9a53-f89a19bbf5f4.js",
+        "createdAt": "2024-04-30T06:45:43.704Z",
+        "updatedAt": "2024-04-30T06:45:43.704Z",
+        "id": "66308a9bfcf05d6e9f5e62da"
+      },
+      {
+        "name": "model_pca_20_svm.js",
+        "content": "",
+        "children": [],
+        "fileType": "file",
+        "_id": "66308a9bfcf05d6e9f5e62db",
+        "isSelectedFile": false,
+        "url": "https://assets.editor.p5js.org/615204259975c800247ed951/97e34145-3d99-4256-864d-dc8a3e855639.js",
+        "createdAt": "2024-04-30T06:45:43.704Z",
+        "updatedAt": "2024-04-30T06:45:43.704Z",
+        "id": "66308a9bfcf05d6e9f5e62db"
+      }
+    ],
+    "createdAt": "2024-04-30T06:07:24.540Z",
+    "updatedAt": "2024-04-30T06:45:43.704Z",
+    "id": "y3BSfUsrS"
   },
   {
     "name": "jan 25",
@@ -3896,6 +4730,75 @@
     "createdAt": "2022-01-31T19:29:29.598Z",
     "updatedAt": "2022-01-31T20:14:34.667Z",
     "id": "4ukFBsIAT"
+  },
+  {
+    "name": "LukeChoi Sound Galaxy copy",
+    "_id": "KEBjROO89",
+    "files": [
+      {
+        "name": "root",
+        "content": "",
+        "children": [
+          "662fb3e97b7f856204c69b44",
+          "662fb3e97b7f856204c69b45",
+          "662fb3e97b7f856204c69b46",
+          "662fb3e97b7f856204c69b47"
+        ],
+        "fileType": "folder",
+        "_id": "662fb3e97b7f856204c69b43",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-29T17:19:33.551Z",
+        "updatedAt": "2024-04-29T17:19:33.551Z",
+        "id": "662fb3e97b7f856204c69b43"
+      },
+      {
+        "name": "sketch.js",
+        "content": "let fft\n\nlet Particle = function(position, direction, r,g,b){\n  this.position = createVector(winwidth/2, height/2)\n  this.speed = 1\n  this.color = [r + random(-32,32),g+ random(-32,32),b+ random(-32,32)]\n  this.direction = direction\n  \n  this.draw = function(){\n    circle(this.position.x, this.position.y, this.diameter)\n    fill(this.color)\n  }\n  \n  this.update = function(energy){\n    this.speed = energy\n    this.diameter = random(5, 7) + energy * 50\n    this.position.x += this.speed * 10 * Math.sin(this.direction)\n    this.position.y += this.speed * 10 * Math.cos(this.direction)\n    if (this.position.y > width || this.position.x > height || this.position.y < 0 || this.position.x < 0) { \n      this.position = createVector(width/2, height/2)   \n    }\n  }\n}\n\nfunction setup(){\n  createCanvas(windowWidth, windowHeight)\n  noStroke()\n  \n  let mic = new p5.AudioIn()\n  mic.start()\n  \n  fft = new p5.FFT()\n  fft.setInput(mic)\n  \n  positionParticles()\n  \n}\n\nfunction draw(){\n  background(0, 0, 0)\n  let spectrum = fft.analyze()\n  updateParticles(spectrum)\n}\n\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "662fb3e97b7f856204c69b46",
+        "isSelectedFile": true,
+        "createdAt": "2024-04-29T17:19:33.551Z",
+        "updatedAt": "2024-04-29T17:19:33.551Z",
+        "id": "662fb3e97b7f856204c69b46"
+      },
+      {
+        "name": "index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head><script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js\"></script>\n    \n    <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">\n    <meta charset=\"utf-8\" />\n\n  </head>\n  <body>\n    <main>\n    </main>\n    <script src=\"galaxyManager.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>",
+        "children": [],
+        "fileType": "file",
+        "_id": "662fb3e97b7f856204c69b45",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-29T17:19:33.551Z",
+        "updatedAt": "2024-04-29T17:19:33.551Z",
+        "id": "662fb3e97b7f856204c69b45"
+      },
+      {
+        "name": "style.css",
+        "content": "html, body {\n  margin: 0;\n  padding: 0;\n}\ncanvas {\n  display: block;\n}\n",
+        "children": [],
+        "fileType": "file",
+        "_id": "662fb3e97b7f856204c69b47",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-29T17:19:33.551Z",
+        "updatedAt": "2024-04-29T17:19:33.551Z",
+        "id": "662fb3e97b7f856204c69b47"
+      },
+      {
+        "name": "galaxyManager.js",
+        "content": "const binCount = 1024\nlet particles = new Array(binCount)\n\nfunction positionParticles() {\n  // takes array of particles\n  // puts the 'tickle' in par-tickle\n  for (let i = 0; i < particles.length; i++) {\n    let x = map(i, 0, binCount, 0, width * 2) // expands the particles to fit your screen using p5.map\n    let y = random(0, height)\n    let direction = map(i, 0, binCount, 0, 360)\n    let position = createVector(x, y)\n    let r = map(i, 0, binCount, 33, 223)\n    let g = map(i, 0, binCount, 33, 223)\n    let b = map(i, 0, binCount, 33, 223)\n    let partickle = new Particle(position, direction, r,g,b)\n    particles[i] = partickle\n  }\n}\n\nfunction updateParticles(spectrum) {\n  // update and draw all [binCount] particles!\n  // Each particle gets a level that corresponds to\n  // the level at one bin of the FFT spectrum. \n  // This level is like amplitude, often called \"energy.\"\n  // It will be a number between 0-255.\n  spectrum.forEach((bin, i) => {\n    let binLevel = map(bin, 0, 255, 0, 1)\n    particles[i].update(binLevel)\n    particles[i].draw()\n  })\n}\n\n// Only for drawing static particles in one section of the workshop\nfunction drawParticles() {\n  particles.forEach(particle => {\n    particle.diameter = 5\n    particle.draw()\n  })\n}\n\nfunction touchStarted() {\n  if (getAudioContext().state !== 'running') {\n    getAudioContext().resume()\n  }\n}",
+        "children": [],
+        "fileType": "file",
+        "_id": "662fb3e97b7f856204c69b44",
+        "isSelectedFile": false,
+        "createdAt": "2024-04-29T17:19:33.551Z",
+        "updatedAt": "2024-04-29T17:19:33.551Z",
+        "id": "662fb3e97b7f856204c69b44"
+      }
+    ],
+    "createdAt": "2024-04-29T14:51:21.375Z",
+    "updatedAt": "2024-04-29T17:19:33.551Z",
+    "id": "KEBjROO89"
   },
   {
     "name": "media",
